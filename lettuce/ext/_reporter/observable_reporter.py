@@ -11,7 +11,7 @@ from packaging import version
 
 __all__ = ['Observable', 'ObservableReporter', 'MaximumVelocity',
            'IncompressibleKineticEnergy', 'Enstrophy', 'EnergySpectrum',
-           'Mass']
+           'Mass', 'Pressure']
 
 
 class Observable(ABC):
@@ -30,6 +30,13 @@ class MaximumVelocity(Observable):
     def __call__(self, f: Optional[torch.Tensor] = None):
         return torch.norm(self.flow.u_pu, dim=0).max()
 
+class Pressure(Observable):
+    def __call__(self, f):
+        p = self.lattice.rho(f)
+        mittelpunkt = int(p.shape[1]/2)
+        #print(p.shape)
+        #p_mean = p.mean()
+        return self.flow.units.convert_density_lu_to_pressure_pu(p)[0, :, mittelpunkt]
 
 class IncompressibleKineticEnergy(Observable):
     """Total kinetic energy of an incompressible flow."""

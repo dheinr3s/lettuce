@@ -7,5 +7,6 @@ from .doublyshear import *
 from .decayingturbulence import *
 from .obstacle import *
 from .liddrivencavity import *
+from .danielsflow import *
 
 from ._flow_by_name import *

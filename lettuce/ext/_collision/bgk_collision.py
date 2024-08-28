@@ -25,7 +25,8 @@ class BGKCollision(Collision):
         if self.force is not None:
             return f"{self.__class__.__name__}_{self.force.__class__.__name__}"
         return self.__class__.__name__
-
+        #Krueger S.66 Gleichung (3.8)
+    
     def native_available(self) -> bool:
         return self.force is None or self.force.native_available()
 
